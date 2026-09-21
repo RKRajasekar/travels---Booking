@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
@@ -38,7 +38,7 @@ export default function TravelOwnerDashboardPage() {
   const [dashboardData, setDashboardData] = useState(null);
   const [error, setError] = useState('');
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     const res = await getOperatorDashboardData(operatorName);
     if (res.success) {
@@ -47,11 +47,11 @@ export default function TravelOwnerDashboardPage() {
       setError(res.error || 'Failed to load dashboard data');
     }
     setLoading(false);
-  };
+  }, [operatorName]);
 
   useEffect(() => {
     loadData();
-  }, [operatorName]);
+  }, [loadData]);
 
   if (loading) {
     return (

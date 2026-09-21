@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import {
   Box,
@@ -41,18 +41,18 @@ export default function TravelOwnerDriversPage() {
   const [updatingId, setUpdatingId] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const fetchDrivers = async () => {
+  const fetchDrivers = useCallback(async () => {
     setLoading(true);
     const res = await getOperatorDrivers(operatorName);
     if (res.success) {
       setDrivers(res.data);
     }
     setLoading(false);
-  };
+  }, [operatorName]);
 
   useEffect(() => {
     fetchDrivers();
-  }, [operatorName]);
+  }, [fetchDrivers]);
 
   const handleStatusChange = async (driverId, newStatus) => {
     setUpdatingId(driverId);

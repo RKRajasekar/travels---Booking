@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import {
   Box,
@@ -41,18 +41,18 @@ export default function TravelOwnerCabsPage() {
   const [updatingId, setUpdatingId] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const fetchCabs = async () => {
+  const fetchCabs = useCallback(async () => {
     setLoading(true);
     const res = await getOperatorCabs(operatorName);
     if (res.success) {
       setCabs(res.data);
     }
     setLoading(false);
-  };
+  }, [operatorName]);
 
   useEffect(() => {
     fetchCabs();
-  }, [operatorName]);
+  }, [fetchCabs]);
 
   const handleToggleAvailability = async (cab) => {
     const nextAvail = !cab.available;

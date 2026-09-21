@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import {
   Box,
@@ -37,18 +37,18 @@ export default function TravelOwnerBookingsPage() {
   const [activeTab, setActiveTab] = useState('ALL');
   const [searchQuery, setSearchQuery] = useState('');
 
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     setLoading(true);
     const res = await getOperatorBookings(operatorName);
     if (res.success) {
       setBookings(res.data);
     }
     setLoading(false);
-  };
+  }, [operatorName]);
 
   useEffect(() => {
     fetchBookings();
-  }, [operatorName]);
+  }, [fetchBookings]);
 
   const filteredBookings = bookings.filter((b) => {
     if (activeTab !== 'ALL' && b.status.toUpperCase() !== activeTab.toUpperCase()) {

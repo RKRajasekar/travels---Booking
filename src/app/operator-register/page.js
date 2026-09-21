@@ -114,7 +114,7 @@ export default function OperatorRegisterPage() {
             Ready to Onboard Your Fleet?
           </Typography>
           <Typography variant="body1" sx={{ color: '#94A3B8', maxWidth: 600, mx: 'auto', mb: 4 }}>
-            Sign up in under 2 minutes. Select "Travel / Fleet Operator" during registration to immediately access your Operator Workspace.
+            Sign up in under 2 minutes. Select &quot;Travel / Fleet Operator&quot; during registration to immediately access your Operator Workspace.
           </Typography>
           <Box sx={{ display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
             <Button

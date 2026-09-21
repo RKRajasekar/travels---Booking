@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
@@ -46,18 +46,18 @@ export default function TravelOwnerTripsPage() {
   const [editStatus, setEditStatus] = useState('SCHEDULED');
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const fetchTrips = async () => {
+  const fetchTrips = useCallback(async () => {
     setLoading(true);
     const res = await getOperatorTrips(operatorName);
     if (res.success) {
       setTrips(res.data);
     }
     setLoading(false);
-  };
+  }, [operatorName]);
 
   useEffect(() => {
     fetchTrips();
-  }, [operatorName]);
+  }, [fetchTrips]);
 
   const handleEditOpen = (trip) => {
     setSelectedTrip(trip);

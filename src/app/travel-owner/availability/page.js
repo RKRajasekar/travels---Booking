@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
 import {
@@ -44,7 +44,7 @@ export default function DailyAvailabilityPage() {
   const [updatingId, setUpdatingId] = useState(null);
   const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     const [busRes, cabRes] = await Promise.all([
       getOperatorBuses(operatorName),
@@ -53,11 +53,11 @@ export default function DailyAvailabilityPage() {
     if (busRes.success) setBuses(busRes.data);
     if (cabRes.success) setCabs(cabRes.data);
     setLoading(false);
-  };
+  }, [operatorName]);
 
   useEffect(() => {
     loadData();
-  }, [operatorName]);
+  }, [loadData]);
 
   const handleBusToggle = async (bus) => {
     const newStatus = bus.status === 'AVAILABLE' ? 'UNAVAILABLE' : 'AVAILABLE';
