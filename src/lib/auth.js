@@ -138,5 +138,5 @@ export const authOptions = {
   session: {
     strategy: 'jwt',
   },
-  secret: process.env.AUTH_SECRET,
+  secret: process.env.AUTH_SECRET || process.env.NEXTAUTH_SECRET || 'nextbus-super-secret-production-key-2024',
 };
