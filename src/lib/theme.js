@@ -104,6 +104,40 @@ export const theme = createTheme({
         },
       },
     },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          paddingLeft: '16px',
+          paddingRight: '16px',
+          '@media (min-width: 600px)': {
+            paddingLeft: '24px',
+            paddingRight: '24px',
+          },
+          '@media (min-width: 900px)': {
+            paddingLeft: '36px',
+            paddingRight: '36px',
+          },
+          '@media (min-width: 1200px)': {
+            paddingLeft: '48px',
+            paddingRight: '48px',
+          },
+          '@media (min-width: 1536px)': {
+            paddingLeft: '64px',
+            paddingRight: '64px',
+          },
+        },
+        maxWidthLg: {
+          '@media (min-width: 1200px)': {
+            maxWidth: '100% !important',
+          },
+        },
+        maxWidthXl: {
+          '@media (min-width: 1200px)': {
+            maxWidth: '100% !important',
+          },
+        },
+      },
+    },
   },
 });
 

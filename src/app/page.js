@@ -529,7 +529,7 @@ export default function HomePage() {
                 sx={{
                   position: 'relative',
                   width: '100%',
-                  maxWidth: { xs: 440, md: 540 },
+                  maxWidth: { xs: 440, md: 620, lg: 720 },
                   mx: 'auto',
                   animation: 'busFloat 5s ease-in-out infinite',
                 }}

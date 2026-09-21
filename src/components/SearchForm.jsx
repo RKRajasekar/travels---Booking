@@ -143,7 +143,7 @@ export default function SearchForm({ onLocationDetected, initialSource = '', onS
       sx={{
         p: { xs: 2.5, sm: 3.5, md: 4 },
         width: '100%',
-        maxWidth: 1040,
+        maxWidth: '100%',
         mx: 'auto',
         mt: { xs: -5, md: -7 },
         zIndex: 20,
