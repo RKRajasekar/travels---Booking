@@ -1,0 +1,137 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  USER
+  ADMIN
+  DRIVER
+}
+
+enum BusType {
+  AC
+  NON_AC
+  SLEEPER
+  SEATER
+  AC_SLEEPER
+  AC_SEATER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+}
+
+enum TripStatus {
+  SCHEDULED
+  ACTIVE
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Bus {
+  id                 String        @id @default(auto()) @map("_id") @db.ObjectId
+  busNumber          String        @unique
+  operatorName       String
+  registrationNumber String        @unique
+  busType            BusType
+  totalSeats         Int
+  trips              Trip[]
+  liveTrackers       LiveTracker[]
+  createdAt          DateTime      @default(now())
+  updatedAt          DateTime      @updatedAt
+}
+
+model Route {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  source      String
+  destination String
+  distance    Float
+  duration    String   // e.g., "5h 30m"
+  stops       String[]
+  trips       Trip[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([source, destination])
+}
+
+model Trip {
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  busId          String      @db.ObjectId
+  bus            Bus?        @relation(fields: [busId], references: [id], onDelete: Cascade)
+  routeId        String      @db.ObjectId
+  route          Route?      @relation(fields: [routeId], references: [id], onDelete: Cascade)
+  departureTime  DateTime
+  arrivalTime    DateTime
+  price          Float
+  status         TripStatus  @default(SCHEDULED)
+  availableSeats Int
+  bookings       Booking[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([busId])
+  @@index([routeId])
+}
+
+model Booking {
+  id               String        @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String        @db.ObjectId
+  user             User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tripId           String        @db.ObjectId
+  trip             Trip?         @relation(fields: [tripId], references: [id], onDelete: Cascade)
+  seatNumbers      String[]
+  passengerDetails Json          // Array of { name: String, age: Int, gender: String }
+  boardingPoint    String
+  droppingPoint    String
+  totalAmount      Float
+  bookingStatus    BookingStatus @default(PENDING)
+  paymentStatus    PaymentStatus @default(PENDING)
+  contactPhone     String?
+  contactEmail     String?
+  pnr              String        @unique
+  qrCode           String        // Secure URL/Token
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([tripId])
+}
+
+model LiveTracker {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  busId     String   @db.ObjectId
+  bus       Bus?     @relation(fields: [busId], references: [id], onDelete: Cascade)
+  latitude  Float
+  longitude Float
+  speed     Float
+  heading   Float
+  timestamp DateTime @default(now())
+
+  @@index([busId])
+}
+
