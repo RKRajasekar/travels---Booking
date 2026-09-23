@@ -277,8 +277,8 @@ export default function HomePage() {
           position: 'relative',
           background: 'linear-gradient(145deg, #1C0308 0%, #3B0813 40%, #540D1B 70%, #170407 100%)',
           color: '#FFFFFF',
-          pt: { xs: 6, md: 9 },
-          pb: { xs: 11, md: 14 },
+          pt: { xs: 4, md: 9 },
+          pb: { xs: 5, md: 14 },
           px: 2,
           overflow: 'hidden',
           borderBottom: '1px solid rgba(220, 38, 38, 0.15)',
@@ -443,7 +443,7 @@ export default function HomePage() {
                 <Typography
                   variant="h1"
                   sx={{
-                    fontSize: { xs: '2.4rem', sm: '3.1rem', md: '3.6rem' },
+                    fontSize: { xs: '1.95rem', sm: '2.6rem', md: '3.6rem' },
                     fontWeight: 900,
                     mb: 2,
                     letterSpacing: '-0.035em',

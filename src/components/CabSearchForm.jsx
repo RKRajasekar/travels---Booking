@@ -389,6 +389,7 @@ export default function CabSearchForm({
             size="large"
             startIcon={<SearchIcon sx={{ fontSize: '24px !important' }} />}
             sx={{
+              width: { xs: '100%', sm: 'auto' },
               background: 'linear-gradient(135deg, #D97706 0%, #B45309 50%, #92400E 100%)',
               color: '#FFFFFF',
               fontWeight: 800,

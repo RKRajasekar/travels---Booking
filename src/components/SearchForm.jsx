@@ -145,7 +145,7 @@ export default function SearchForm({ onLocationDetected, initialSource = '', onS
         width: '100%',
         maxWidth: '100%',
         mx: 'auto',
-        mt: { xs: -5, md: -7 },
+        mt: { xs: 2.5, md: -7 },
         zIndex: 20,
         position: 'relative',
         borderRadius: { xs: 4, md: 5 },
@@ -353,6 +353,7 @@ export default function SearchForm({ onLocationDetected, initialSource = '', onS
               size="large"
               startIcon={<SearchIcon sx={{ fontSize: '1.25rem !important' }} />}
               sx={{
+                width: { xs: '100%', sm: 'auto' },
                 height: 52,
                 px: { xs: 5, md: 8 },
                 fontWeight: 800,
